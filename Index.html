@@ -1,0 +1,82 @@
+<html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Browser</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+    }
+
+    #toolbar {
+      display: flex;
+      background: #222;
+      padding: 10px;
+    }
+
+    #toolbar input {
+      flex: 1;
+      padding: 8px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+    }
+
+    #toolbar button {
+      margin-left: 10px;
+      padding: 8px 14px;
+      font-size: 16px;
+      border: none;
+      background: #444;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    iframe {
+      width: 100%;
+      height: calc(100vh - 60px);
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="toolbar">
+    <input type="text" id="url" placeholder="Enter a website (like youtube.com)">
+    <button onclick="goToSite()">Go</button>
+  </div>
+
+  <iframe id="browser" src="https://example.com"></iframe>
+
+  <script>
+    const blockedSites = [
+      "youtube.com",
+      "google.com",
+      "facebook.com",
+      "instagram.com",
+      "tiktok.com"
+    ];
+
+    function goToSite() {
+      let input = document.getElementById('url').value.trim();
+
+      if (!input.startsWith("http://") && !input.startsWith("https://")) {
+        input = "https://" + input;
+      }
+
+      const isBlocked = blockedSites.some(site => input.includes(site));
+
+      if (isBlocked) {
+        window.open(input, '_blank'); // opens in user's browser
+      } else {
+        document.getElementById('browser').src = input; // shows in iframe
+      }
+    }
+  </script>
+
+</body>
+</html>
